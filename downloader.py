@@ -34,7 +34,6 @@ def download_audio_only(link, SAVE_PATH):
     print(yt.streams.filter(only_audio=True, file_extension='mp4'))
     vid = yt.streams.filter(only_audio=True, file_extension='mp4').last()
 
-
     file = vid.download(SAVE_PATH)
 
     base, ext = os.path.splitext(file)
@@ -43,12 +42,12 @@ def download_audio_only(link, SAVE_PATH):
 
 
 if __name__ == '__main__':
-    lnk = 'https://www.youtube.com/watch?v=vUpF6VjIC-8'
+    lnk = ''
 
     # download_audio_only(lnk, save_path)
     # download_video(lnk, save_path)
     save_path = input('Enter save path:\n')
 
     opt = get_video_options(lnk)
-    print(opt)
-    print(opt[0].itag)
+    # print(opt)
+    # print(opt[0].itag)
