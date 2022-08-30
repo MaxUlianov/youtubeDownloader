@@ -4,6 +4,11 @@ import logging
 
 
 def convert_timestamp(timestamp):
+    """
+    Convert start-end timestamps into start and end time in milliseconds
+    :param timestamp: string tuple ('mm:ss', 'mm:ss')
+    :return: start: millisecond value integer, end: millisecond value integer
+    """
     start_time = [int(i) for i in timestamp[0].split(':')]
     end_time = [int(i) for i in timestamp[1].split(':')]
 
@@ -15,11 +20,10 @@ def convert_timestamp(timestamp):
 
 def cut_audio(filename, cut_points, base_path='static/files/'):
     """
-
-    :param filename: filename
+    Cut a part of audio file, save to specified location with a name 'original name -start-end'
+    :param filename: original file name
     :param base_path: path to audio file being cut
-    :param cut_points: tuple (start mm:ss, end mm:ss)
-    :return:
+    :param cut_points: string tuple (start 'mm:ss', end 'mm:ss')
     """
     save_path = os.path.join(base_path, filename)
     logging.info(f'save path: {save_path}')
@@ -40,6 +44,12 @@ def cut_audio(filename, cut_points, base_path='static/files/'):
 
 
 def cut_audio_segments(file, timestamps, base_path='static/files/'):
+    """
+    Cuts multiple parts of audio file, saves to specified location
+    :param file: original file name
+    :param timestamps: list of string tuples, defining parts to cut, in format (start 'mm:ss', end 'mm:ss')
+    :param base_path: path to original file location
+    """
     ex_list = {}
 
     for timestamp in timestamps:
@@ -50,6 +60,11 @@ def cut_audio_segments(file, timestamps, base_path='static/files/'):
 
 
 def get_timestamps(time_input):
+    """
+    Converting input to timestamps
+    :param time_input: string of timestamp pairs in format 'mm:ss mm:ss'
+    :return: list of string tuples of timestamps: ('mm:ss', 'mm:ss')
+    """
     time_input = time_input.split(' ')
     times = list(zip(time_input[::2], time_input[1::2]))
     logging.info(f'Timestamps: {times}')

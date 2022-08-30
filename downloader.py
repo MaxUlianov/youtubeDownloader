@@ -6,38 +6,69 @@ from audio_cutter import cut_audio_segments, get_timestamps
 
 
 def get_video_options(link):
+    """
+    Get download options for Yt video
+    :param link: Yt link
+    :return: list of options
+    """
     yt = YouTube(link, on_progress_callback=on_progress)
-
     options = yt.streams.filter(progressive=True, file_extension='mp4')
 
     return options
 
 
 def get_audio_options(link):
+    """
+    Get audio-only download options for Yt video
+    :param link: Yt link
+    :return: list of options
+    """
     yt = YouTube(link, on_progress_callback=on_progress)
-
     options = yt.streams.filter(only_audio=True, file_extension='mp4')
 
     return options
 
 
-def download_video(link, save_path='static/files/'):
+def download_video(link, save_path='static/files/', itag=None):
+    """
+    Download Youtube video
+    :param link: Yt link
+    :param save_path: file save location
+    :param itag: download option tag
+    :return: name of video file saved
+    """
     yt = YouTube(link, on_progress_callback=on_progress)
 
     logging.info(yt.streams.filter(progressive=True, file_extension='mp4'))
-    vid = yt.streams.filter(progressive=True, file_extension='mp4').first()
-    # choose which stream to download with itag=ID in stream attributes
-    # vid = yt.streams.get_by_itag(22)
 
-    vid.download(save_path)
+    if itag is None:
+        vid = yt.streams.filter(progressive=True, file_extension='mp4').first()
+    else:
+        vid = yt.streams.filter(progressive=True, file_extension='mp4').get_by_itag(itag)
+
+    video = vid.download(save_path)
+    file_name = os.path.basename(video)
+
+    return file_name
 
 
-def download_audio_only(link, save_path='static/files/'):
+def download_audio_only(link, save_path='static/files/', itag=None):
+    """
+    Download Youtube video as audio-only file
+    :param link: Yt link
+    :param save_path: file save location
+    :param itag: download option tag
+    :return: name of audio file saved
+    """
 
     yt = YouTube(link, on_progress_callback=on_progress)
 
     logging.info(yt.streams.filter(only_audio=True, file_extension='mp4'))
-    vid = yt.streams.filter(only_audio=True, file_extension='mp4').last()
+
+    if itag is None:
+        vid = yt.streams.filter(only_audio=True, file_extension='mp4').last()
+    else:
+        vid = yt.streams.filter(only_audio=True, file_extension='mp4').get_by_itag(itag)
 
     file = vid.download(save_path)
 
