@@ -3,8 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Yt Downloader</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page.css') }}"/>
 </head>
 <body>
+    <header>
+        <div class="topbar">
+            <a class="active">
+                <img src="img/ytdl 150-01.png" alt="YTDL logo">
+            </a>
+            <a>
+                <img src="img/ytdl cap-01.png" alt="Yt Downloader">
+            </a>
+        </div>
+    </header>
 
+    <div class="main-container">
+        <h1>YT Downloader</h1>
+        <h3>Download video from Yt – Cut Yt video – Download and cut audio-only</h3>
+
+        <input name="link-field" type="url" class="link-field" placeholder="Insert link here" pattern="^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+">
+        <input type="submit" class="email button" value="Submit">
+    </div>
+
+    <footer>
+
+    </footer>
 </body>
 </html>
