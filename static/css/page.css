@@ -52,11 +52,11 @@ img{
 h1 {
     display: block;
     text-align: center;
-    padding-top: 100px;
-    padding-bottom: 30px;
+    padding-top: 75px;
+    padding-bottom: 20px;
     background-color: #ffffff;
     max-width: 1080px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -86,5 +86,126 @@ h3 {
 }
 
 .link-input{
+    display: block;
+    max-width: 1080px;
+    padding-bottom: 75px;
+}
 
+
+.link-field{
+    width: 420px;
+    background: #ffffff;
+    font: inherit;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    border: 0;
+    outline: 0;
+    padding: 15px 10px;
+    height: 20px;
+}
+
+.dl-button{
+    background-color: #20222a;
+    color: white;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    border: black;
+    height: 50px;
+    width: 70px;
+}
+
+.dl-button:hover {
+	background-color: red;
+}
+
+.dl-button.active {
+    background: orange;
+    box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.2);
+}
+
+.parameters{
+    padding-top: 75px;
+}
+
+.timestamp-field{
+    width: 420px;
+    background: #ffffff;
+    font: inherit;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    border: 0;
+    outline: 0;
+    margin-top: 20px;
+    padding: 15px 10px;
+    height: 20px;
+}
+
+.dl-options{
+    padding-top: 25px;
+    padding-bottom: 15px;
+    height: 240px;
+}
+
+.loading{
+    display: none;
+    background: url(/static/img/loading.gif) no-repeat;
+    cursor: wait;
+    margin: auto;
+    align-items: center;
+}
+
+.loading img{
+    width: 100px;
+    height: 100px
+}
+
+.instructions{
+    border: 2px solid black;
+    box-sizing: border-box;
+    padding-top: 25px;
+}
+
+.column {
+    display: block;
+    width: 30%;
+    padding: 15px;
+    border-radius: 10px;
+    height: 120px;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+}
+
+.column img{
+    padding-top: 15px;
+}
+
+.instruction-point{
+    height: 50px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row a {
+    display: block;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+@media screen and (max-width:720px) {
+  .column {
+    width: 100%;
+  }
 }

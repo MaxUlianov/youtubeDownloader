@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Yt Downloader</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page.css') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/icon-small.ico') }}">
 </head>
 <body>
     <header>
@@ -24,25 +25,55 @@
         <div class="link-input">
             <form class="yt-link" method="post" action="/">
                 <input name="link-field" type="url" class="link-field" placeholder="Insert link here" pattern="^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+">
-                <input type="submit" class="email button" value="Submit">
+                <input type="submit" class="dl-button" value="Submit" onclick="loading();">
 
                 <div class="parameters">
+                    <h3>Download parameters</h3>
                     <input name="audio-only" type="checkbox">
+                    Download audio only
+
+                    <div style="padding-top: 15px;">Cut and download multiple parts</div>
                     <div class="timestamp-input">
-                        <input name="timestamp-field" type="text" placeholder="00:00 00:00">
+                        <input name="timestamp-field" class="timestamp-field" type="text" placeholder="Enter timestamps 00:00 00:00">
                     </div>
                 </div>
             </form>
 
         </div>
 
-        <div class="dl-options">
-            {{ options }}
+        <div id="loading" class="loading">
+            <img src="/img/loading.gif">
+        </div>
+        <div class="dl-options" id="dl-options">
+<!--            <h3>Download quality options</h3>-->
+            {% for option in options %}
+                <div>{{ option }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="instructions">
+            <h3>Download tutorial</h3>
+            <div class="row">
+                <a class="column">
+                    <div class="instruction-point">Enter link</div>
+                    <div><img src="img/swirl-logo-01.png"></div>
+                </a>
+                <a class="column">
+                    <div class="instruction-point">Adjust download parameters</div>
+                    <div><img src="img/swirl-logo-01.png"></div>
+                </a>
+                <a class="column">
+                    <div class="instruction-point">Choose the preferred quality option</div>
+                    <div><img src="img/swirl-logo-01.png"></div>
+                </a>
+            </div>
         </div>
     </div>
 
     <footer>
 
     </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
