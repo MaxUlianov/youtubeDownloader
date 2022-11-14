@@ -36,7 +36,7 @@ def cut_audio(filename, cut_points, base_path='static/files/'):
     audio = track[start_time:end_time]
 
     file_format = 'mp3'
-    name = filename.replace('.m4a', f' {cut_points[0]}-{cut_points[1]}.{file_format}')
+    name = filename.replace('.m4a', f'_{cut_points[0]}-{cut_points[1]}.{file_format}')
     save_path = os.path.join(base_path, name)
     logging.info(f'save path: {save_path}')
 

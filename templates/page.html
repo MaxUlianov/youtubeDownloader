@@ -25,7 +25,7 @@
         <div class="link-input">
             <form class="yt-link" method="post" action="/">
                 <input name="link-field" type="url" class="link-field" placeholder="Insert link here" pattern="^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+">
-                <input type="submit" class="dl-button" value="Submit" onclick="loading();">
+                <input type="submit" name="submit" class="dl-button" value="Submit" onclick="loading();">
 
                 <div class="parameters">
                     <h3>Download parameters</h3>
@@ -45,10 +45,15 @@
             <img src="/img/loading.gif">
         </div>
         <div class="dl-options" id="dl-options">
-<!--            <h3>Download quality options</h3>-->
-            {% for option in options %}
-                <div>{{ option }}</div>
-            {% endfor %}
+            <div><h3>Download quality options</h3></div>
+            <form method="post" action="/">
+                {% for option in options %}
+                    <div>
+                        <button type="submit" name="download" value="{{ option.itag }}" class="option">{{ option.resolution }}</button>
+                        <input type="hidden" name="params" value="{{ params }}">
+                    </div>
+                {% endfor %}
+            </form>
         </div>
 
         <div class="instructions">

@@ -144,6 +144,27 @@ h3 {
     height: 240px;
 }
 
+.option{
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    border: black;
+    height: 50px;
+    width: 150px;
+    padding-bottom: 5px;
+    font: inherit;
+}
+
+.option:hover{
+    background: grey;
+}
+
+.option.active{
+    background: orange;
+    box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.2);
+}
+
 .loading{
     display: none;
     background: url(/static/img/loading.gif) no-repeat;
@@ -160,7 +181,7 @@ h3 {
 .instructions{
     border: 2px solid black;
     box-sizing: border-box;
-    padding-top: 25px;
+    padding-top: 35px;
 }
 
 .column {
