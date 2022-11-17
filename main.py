@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, send_from_directory
 from pytube.exceptions import RegexMatchError
 import logging
 import json
@@ -14,11 +14,6 @@ app.secret_key = config.secret
 @app.route('/', methods=['GET', 'POST'])
 def ytdl():
     if request.method == "POST":
-        if "download" in request.form:
-            logging.info(f'Download request {request.form}')
-            itag = request.form["download"]
-            params = request.form["params"]
-            return redirect(url_for("download", itag=itag, params=params))
 
         link = request.form["link-field"]
         logging.info(f'Link received: {link}')
@@ -47,14 +42,19 @@ def error():
 
 @app.route('/download', methods=["GET", "POST"])
 def download():
-    if request.args:
-        itag = request.args.get("itag", None)
-        params = request.args.get("params", None)
+    if request.method == "POST":
+        filename = 'swirl-logo-01.png'
+        return send_from_directory(directory='static/files', path=filename, as_attachment=True)
+    elif request.method == "GET":
+        if request.args:
+            itag = request.args.get("itag", None)
+            params = request.args.get("params", None)
 
-        p = json.loads(params)
-        link = p['link-field']
-        timestamps = p['timestamp-field']
-        return [link, itag, p]
+            p = json.loads(params)
+            link = p['link-field']
+            timestamps = p['timestamp-field']
+            return render_template("dl.html", link=link)
+        return render_template("dl.html")
 
 
 if __name__ == '__main__':

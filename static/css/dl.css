@@ -1,0 +1,21 @@
+
+.dl-container{
+    display: block;
+    max-width: 1080px;
+    padding-bottom: 75px;
+}
+
+.dl-button{
+    background: red;
+    color: white;
+}
+
+.dl-button:hover{
+    background: #20222a;
+}
+
+.redirect-back{
+    display: none;
+    padding-top: 15px;
+    padding-bottom: 25px;
+}

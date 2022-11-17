@@ -150,14 +150,16 @@ h3 {
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     border: black;
-    height: 50px;
-    width: 150px;
-    padding-bottom: 5px;
+    height: fit-content;
+    width: fit-content;
+    padding-bottom: 20px;
+    padding: 15px 25px;
     font: inherit;
 }
 
 .option:hover{
-    background: grey;
+    background: #20222a;
+    color: white;
 }
 
 .option.active{

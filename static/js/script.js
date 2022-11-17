@@ -4,3 +4,7 @@ function loading(){
     document.getElementById("dl-options").style.display = "none";
 }
 
+function afterLoading(){
+//    document.getElementById("loading").style.display = "none";
+    document.getElementById("redirect-back").style.display = "block";
+}

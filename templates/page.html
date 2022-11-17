@@ -46,10 +46,10 @@
         </div>
         <div class="dl-options" id="dl-options">
             <div><h3>Download quality options</h3></div>
-            <form method="post" action="/">
+            <form method="get" action="/download">
                 {% for option in options %}
                     <div>
-                        <button type="submit" name="download" value="{{ option.itag }}" class="option">{{ option.resolution }}</button>
+                        <button type="submit" name="download" value="{{ option.itag }}" class="option" onclick="loading();">{{ option.resolution }}</button>
                         <input type="hidden" name="params" value="{{ params }}">
                     </div>
                 {% endfor %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Download</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dl.css') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/icon-small.ico') }}">
+</head>
+<body>
+    <header>
+        <div class="topbar">
+            <a class="active">
+                <img src="img/logo-01.png" alt="YTDL logo">
+            </a>
+            <a>
+                <img src="img/title-01.png" alt="Yt Downloader">
+            </a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <h1>YT Downloader</h1>
+
+        <div class="dl-container">
+            <div id="loading" class="loading">
+                <img src="/img/loading.gif">
+            </div>
+            <div>
+                <h3>Your download</h3>
+                {{ link }}
+            </div>
+            <div>
+                <form method="post">
+                    <input type="submit" class="option dl-button" value="Download" onclick="afterLoading();">
+                </form>
+            </div>
+        </div>
+        <div class="redirect-back" id="redirect-back">
+            <a class="option" href="/">Download another video</a>
+        </div>
+    </div>
+
+    <footer>
+
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
