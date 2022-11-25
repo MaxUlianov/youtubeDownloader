@@ -29,13 +29,20 @@ def get_audio_options(link):
     return options
 
 
-def download_video(link, save_path='static/files/', itag=None):
+def get_options(link, a_only=False):
+    if a_only:
+        return get_audio_options(link)
+    elif not a_only:
+        return get_video_options(link)
+
+
+def download_video(link, itag=None, save_path='static/files/'):
     """
     Download Youtube video
     :param link: Yt link
     :param save_path: file save location
     :param itag: download option tag
-    :return: name of video file saved
+    :return str: name of video file saved
     """
     yt = YouTube(link, on_progress_callback=on_progress)
 
@@ -47,12 +54,13 @@ def download_video(link, save_path='static/files/', itag=None):
         vid = yt.streams.filter(progressive=True, file_extension='mp4').get_by_itag(itag)
 
     video = vid.download(save_path)
-    file_name = os.path.basename(video)
+    file_name = rename_file(video, '.mp4')
 
+    logging.info(f'Saved video file name: {file_name}')
     return file_name
 
 
-def download_audio_only(link, save_path='static/files/', itag=None):
+def download_audio_only(link, itag=None, save_path='static/files/'):
     """
     Download Youtube video as audio-only file
     :param link: Yt link
@@ -63,7 +71,7 @@ def download_audio_only(link, save_path='static/files/', itag=None):
 
     yt = YouTube(link, on_progress_callback=on_progress)
 
-    logging.info(yt.streams.filter(only_audio=True, file_extension='mp4'))
+    # logging.info(yt.streams.filter(only_audio=True, file_extension='mp4'))
 
     if itag is None:
         vid = yt.streams.filter(only_audio=True, file_extension='mp4').last()
@@ -72,27 +80,62 @@ def download_audio_only(link, save_path='static/files/', itag=None):
 
     file = vid.download(save_path)
 
-    base, ext = os.path.splitext(file)
-    new_file = base + '.m4a'
-    os.rename(file, new_file)
+    file_new = rename_file(file, '.m4a')
+    logging.info(f'Saved audio file name: {file_new}')
+    return file_new
 
-    return new_file
+
+def rename_file(file: str, ext=''):
+    dir = os.path.dirname(file)
+    filename = os.path.basename(file)
+
+    if len(filename) > 20:
+        filename = filename[:20]
+
+    file_new = os.path.join(dir, filename) + ext
+    os.rename(file, file_new)
+    return file_new
+
+
+def download_controller(link, timestamps, itag=None, a_only=False, path=None):
+    dl_file = ''
+
+    if a_only:
+        dl_file = download_audio_only(link, itag)
+
+        if timestamps:
+            ts = get_timestamps(timestamps)
+            dl_files = cut_audio_segments(dl_file, ts)
+            return dl_files
+    elif not a_only:
+        dl_file = download_video(link, itag)
+    return dl_file
 
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s | %(levelname)s: %(message)s', level=logging.INFO)
+    # for testing purposes and for cli usage
 
-    lnk = input('Insert link: \n')
-    path = '/Users/MaxUlianov/Downloads/'
+    lnk = input('Insert link:\n')
+    path = 'static/files'
 
-    opt = get_audio_options(lnk)
+    aud_only = input('Audio only? y/n\n')
+    if aud_only == 'y':
+        a_o = True
+    else:
+        a_o = False
 
+    opt = get_options(lnk, a_o)
     logging.info(f'{opt}')
-    c = input('Confirm?')
-    file = download_audio_only(lnk, path)
 
-    time = input('Insert timestamps \n')
-    times = get_timestamps(time)
+    print(opt)
+    choice_tag = input('\nInsert itag for option from list above:\n')
 
-    c = input('Confirm?')
-    cut_audio_segments(file, times, path)
+    if a_o:
+        time = input('Insert timestamps, format 00:00 00:00 \n')
+    else:
+        time = None
+
+    files = download_controller(lnk, time, itag=choice_tag, a_only=a_o)
+    print(files)
+    # os.remove(file)

@@ -4,7 +4,7 @@ import logging
 import json
 
 import config
-from downloader import get_video_options
+from downloader import get_options
 
 
 app = Flask(__name__, static_folder="static", static_url_path="")
@@ -21,9 +21,14 @@ def ytdl():
 
         params = json.dumps(request.form.to_dict())
 
-        options = []
+        if 'audio-only' in request.form and request.form['audio-only'] == 'on':
+            ao = True
+        else:
+            ao = False
+
         try:
-            options = get_video_options(link)
+            options = get_options(link, ao)
+            print(options)
         except RegexMatchError as e:
             logging.info(f'Error: {error}')
             return redirect(url_for("error", error=e))
@@ -43,6 +48,14 @@ def error():
 @app.route('/download', methods=["GET", "POST"])
 def download():
     if request.method == "POST":
+
+        params = json.loads(request.form['params'])
+        link = params['link-field']
+        timestamps = params['timestamp-field']
+        itag = request.args.get('itag', None)
+
+        print(itag, link, timestamps)
+        # here will be dl function
         filename = 'swirl-logo-01.png'
         return send_from_directory(directory='static/files', path=filename, as_attachment=True)
     elif request.method == "GET":
@@ -52,8 +65,7 @@ def download():
 
             p = json.loads(params)
             link = p['link-field']
-            timestamps = p['timestamp-field']
-            return render_template("dl.html", link=link)
+            return render_template("dl.html", link=link, params=params, itag=itag)
         return render_template("dl.html")
 
 

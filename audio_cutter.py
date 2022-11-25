@@ -7,7 +7,9 @@ def convert_timestamp(timestamp):
     """
     Convert start-end timestamps into start and end time in milliseconds
     :param timestamp: string tuple ('mm:ss', 'mm:ss')
+    :type timestamp: tuple[str, str]
     :return: start: millisecond value integer, end: millisecond value integer
+    :return type: tuple[int, int]
     """
     start_time = [int(i) for i in timestamp[0].split(':')]
     end_time = [int(i) for i in timestamp[1].split(':')]
@@ -22,8 +24,10 @@ def cut_audio(filename, cut_points, base_path='static/files/'):
     """
     Cut a part of audio file, save to specified location with a name 'original name -start-end'
     :param filename: original file name
+    :type filename: str
     :param base_path: path to audio file being cut
     :param cut_points: string tuple (start 'mm:ss', end 'mm:ss')
+    :return str: name of audio file cut
     """
     save_path = os.path.join(base_path, filename)
     logging.info(f'save path: {save_path}')
@@ -36,27 +40,40 @@ def cut_audio(filename, cut_points, base_path='static/files/'):
     audio = track[start_time:end_time]
 
     file_format = 'mp3'
+
+    # if len(filename) > 20:
+    #     filename = filename[:20]
+    #     print(filename)
+
     name = filename.replace('.m4a', f'_{cut_points[0]}-{cut_points[1]}.{file_format}')
     save_path = os.path.join(base_path, name)
     logging.info(f'save path: {save_path}')
 
     audio.export(f'{save_path}', format=file_format)
+    return name
 
 
 def cut_audio_segments(file, timestamps, base_path='static/files/'):
     """
     Cuts multiple parts of audio file, saves to specified location
     :param file: original file name
+    :type file: str
     :param timestamps: list of string tuples, defining parts to cut, in format (start 'mm:ss', end 'mm:ss')
+    :type timestamps: List
     :param base_path: path to original file location
+    :type base_path: str
+    :return list: list of names for audio segment files
     """
     ex_list = {}
-
+    files = []
     for timestamp in timestamps:
         try:
-            cut_audio(file, timestamp, base_path)
+            file_cut = cut_audio(file, timestamp, base_path)
+            files.append(file_cut)
         except Exception as e:
             ex_list[timestamp] = (repr(e))
+
+    return files
 
 
 def get_timestamps(time_input):
@@ -74,10 +91,12 @@ def get_timestamps(time_input):
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s | %(levelname)s: %(message)s', level=logging.INFO)
 
-    file = '01 Back To Earth.m4a'
-    path = '/Users/MaxUlianov/Downloads/'
+    file = input('Insert filename:\n')
+    path = 'static/files'
 
-    time = input('Insert timestamps \n')
+    time = input('Insert timestamps\n')
     times = get_timestamps(time)
 
-    cut_audio_segments(file, times, path)
+    files = cut_audio_segments(file, times, path)
+    print(f'files: {files}')
+    os.remove(file)

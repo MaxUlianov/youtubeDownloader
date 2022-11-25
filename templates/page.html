@@ -34,7 +34,7 @@
 
                     <div style="padding-top: 15px;">Cut and download multiple parts</div>
                     <div class="timestamp-input">
-                        <input name="timestamp-field" class="timestamp-field" type="text" placeholder="Enter timestamps 00:00 00:00">
+                        <input name="timestamp-field" class="timestamp-field" type="text" placeholder="Cut timestamps, format: 00:00 00:00" pattern="^(\d\d:\d\d) (\d\d:\d\d)+">
                     </div>
                 </div>
             </form>
@@ -49,7 +49,7 @@
             <form method="get" action="/download">
                 {% for option in options %}
                     <div>
-                        <button type="submit" name="download" value="{{ option.itag }}" class="option" onclick="loading();">{{ option.resolution }}</button>
+                        <button type="submit" name="itag" value="{{ option.itag }}" class="option" onclick="loading();">{{ option.resolution or option.abr }}</button>
                         <input type="hidden" name="params" value="{{ params }}">
                     </div>
                 {% endfor %}

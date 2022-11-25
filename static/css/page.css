@@ -52,7 +52,7 @@ img{
 h1 {
     display: block;
     text-align: center;
-    padding-top: 75px;
+    padding-top: 60px;
     padding-bottom: 20px;
     background-color: #ffffff;
     max-width: 1080px;
@@ -88,7 +88,7 @@ h3 {
 .link-input{
     display: block;
     max-width: 1080px;
-    padding-bottom: 75px;
+    padding-bottom: 25px;
 }
 
 
@@ -123,7 +123,7 @@ h3 {
 }
 
 .parameters{
-    padding-top: 75px;
+    padding-top: 45px;
 }
 
 .timestamp-field{
@@ -139,9 +139,9 @@ h3 {
 }
 
 .dl-options{
-    padding-top: 25px;
-    padding-bottom: 15px;
-    height: 240px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    display: block;
 }
 
 .option{
@@ -173,6 +173,7 @@ h3 {
     cursor: wait;
     margin: auto;
     align-items: center;
+    padding-bottom: 35px;
 }
 
 .loading img{
