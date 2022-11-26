@@ -192,14 +192,16 @@ h3 {
     width: 30%;
     padding: 15px;
     border-radius: 10px;
-    height: 120px;
+    height: 200px;
     margin: auto;
     text-align: center;
     align-items: center;
 }
 
 .column img{
-    padding-top: 15px;
+    padding-top: 5px;
+    width: 175px;
+    height: 175px;
 }
 
 .instruction-point{

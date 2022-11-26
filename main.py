@@ -1,10 +1,11 @@
-from flask import Flask, request, render_template, redirect, url_for, send_from_directory
+from flask import Flask, request, render_template, redirect, url_for, send_from_directory, after_this_request
 from pytube.exceptions import RegexMatchError
 import logging
 import json
 
 import config
-from downloader import get_options
+import os
+from downloader import get_options, download_controller
 
 
 app = Flask(__name__, static_folder="static", static_url_path="")
@@ -25,7 +26,6 @@ def ytdl():
             ao = True
         else:
             ao = False
-
         try:
             options = get_options(link, ao)
             print(options)
@@ -55,8 +55,18 @@ def download():
         itag = request.args.get('itag', None)
 
         print(itag, link, timestamps)
-        # here will be dl function
-        filename = 'swirl-logo-01.png'
+        f = download_controller(link, timestamps, itag)
+        print(f'f = {f}')
+        filename = os.path.basename(f)
+
+        @after_this_request
+        def delete_file(response):
+            try:
+                os.remove(f)
+            except Exception as e:
+                logging.debug(f'File delete error: {repr(e)}')
+            return response
+
         return send_from_directory(directory='static/files', path=filename, as_attachment=True)
     elif request.method == "GET":
         if request.args:
