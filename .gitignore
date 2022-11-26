@@ -4,3 +4,6 @@
 # Environments
 .venv
 venv/
+
+static/files
+!static/files/swirl-logo-01.png

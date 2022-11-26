@@ -2,6 +2,7 @@ from pytube import YouTube
 from pytube.cli import on_progress
 import os
 import logging
+from zipfile import ZipFile
 from audio_cutter import cut_audio_segments, get_timestamps
 
 
@@ -46,7 +47,7 @@ def download_video(link, itag=None, save_path='static/files/'):
     """
     yt = YouTube(link, on_progress_callback=on_progress)
 
-    logging.info(yt.streams.filter(progressive=True, file_extension='mp4'))
+    # logging.info(yt.streams.filter(progressive=True, file_extension='mp4'))
 
     if itag is None:
         vid = yt.streams.filter(progressive=True, file_extension='mp4').first()
@@ -97,6 +98,16 @@ def rename_file(file: str, ext=''):
     return file_new
 
 
+def make_archive(file_list):
+    name = '/' + os.path.basename(file_list[0][:-16]) + '.zip'
+    archive_name = os.path.abspath('static/files' + name)
+    print(archive_name)
+    with ZipFile(archive_name, 'w') as archive:
+        for file in file_list:
+            archive.write(file, os.path.basename(file))
+    return os.path.abspath(archive_name)
+
+
 def download_controller(link, timestamps, itag=None, a_only=False, path=None):
     dl_file = ''
 
@@ -106,9 +117,18 @@ def download_controller(link, timestamps, itag=None, a_only=False, path=None):
         if timestamps:
             ts = get_timestamps(timestamps)
             dl_files = cut_audio_segments(dl_file, ts)
-            return dl_files
+            archive = make_archive(dl_files)
+
+            os.remove(dl_file)
+            for file in dl_files:
+                os.remove(file)
+            return archive
     elif not a_only:
         dl_file = download_video(link, itag)
+
+        if timestamps:
+            pass
+            # here will be video cutting
     return dl_file
 
 
@@ -126,7 +146,6 @@ if __name__ == '__main__':
         a_o = False
 
     opt = get_options(lnk, a_o)
-    logging.info(f'{opt}')
 
     print(opt)
     choice_tag = input('\nInsert itag for option from list above:\n')
@@ -138,4 +157,3 @@ if __name__ == '__main__':
 
     files = download_controller(lnk, time, itag=choice_tag, a_only=a_o)
     print(files)
-    # os.remove(file)
