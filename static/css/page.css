@@ -80,7 +80,7 @@ h3 {
     margin: auto;
     height: auto;
     padding-top: 15px;
-    padding-bottom: 15px;
+    padding-bottom: 25px;
     width: 90%;
     align-items: center;
 }
@@ -89,11 +89,14 @@ h3 {
     display: block;
     max-width: 1080px;
     padding-bottom: 25px;
+    margin: auto;
+    inline-size: min(100%, 50rem);
 }
 
 
 .link-field{
     width: 420px;
+    inline-size: min(100%, 420px);
     background: #ffffff;
     font: inherit;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
@@ -111,6 +114,7 @@ h3 {
     border: black;
     height: 50px;
     width: 70px;
+    margin-top: 15px;
 }
 
 .dl-button:hover {
@@ -128,6 +132,7 @@ h3 {
 
 .timestamp-field{
     width: 420px;
+    inline-size: min(100%, 420px);
     background: #ffffff;
     font: inherit;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
@@ -183,16 +188,24 @@ h3 {
 
 .instructions{
     border: 2px solid black;
-    box-sizing: border-box;
     padding-top: 35px;
+    padding-bottom: 35px;
+    inline-size: min(100% - 3rem, 60rem);
+    margin-inline: auto;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .column {
-    display: block;
-    width: 30%;
+    flex: 1;
     padding: 15px;
     border-radius: 10px;
-    height: 200px;
+    height: 250px;
     margin: auto;
     text-align: center;
     align-items: center;
@@ -200,38 +213,18 @@ h3 {
 
 .column img{
     padding-top: 5px;
-    width: 175px;
-    height: 175px;
+    width: 200px;
+    height: 200px;
 }
 
 .instruction-point{
     height: 50px;
 }
 
-.row {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.row a {
-    display: block;
-    font-size: 15px;
-    text-decoration: none;
-}
-
-@media screen and (max-width:720px) {
-  .column {
+footer {
+    height: 25px;
+    background: black;
     width: 100%;
-  }
+    padding: 15px;
+    padding-top: 35px;
 }

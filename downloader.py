@@ -4,6 +4,7 @@ import os
 import logging
 from zipfile import ZipFile
 from audio_cutter import cut_audio_segments, get_timestamps
+from video_cutter import cut_video_segments
 
 
 def get_video_options(link):
@@ -127,8 +128,14 @@ def download_controller(link, timestamps, itag=None, a_only=False, path=None):
         dl_file = download_video(link, itag)
 
         if timestamps:
-            pass
-            # here will be video cutting
+            ts = get_timestamps(timestamps)
+            dl_files = cut_video_segments(dl_file, ts)
+            archive = make_archive(dl_files)
+
+            os.remove(dl_file)
+            for file in dl_files:
+                os.remove(file)
+            return archive
     return dl_file
 
 

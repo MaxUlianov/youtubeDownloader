@@ -22,11 +22,13 @@ def convert_timestamp(timestamp):
 
 def cut_audio(filename, cut_points, base_path='static/files/'):
     """
-    Cut a part of audio file, save to specified location with a name 'original name -start-end'
+    Cut a part of audio file, save to specified location with a
+    name '<original name>_start-end'
     :param filename: original file name
     :type filename: str
     :param base_path: path to audio file being cut
     :param cut_points: string tuple (start 'mm:ss', end 'mm:ss')
+    :type cut_points: tuple[str, str]
     :return str: name of audio file cut
     """
     save_path = os.path.join(base_path, filename)
