@@ -26,9 +26,9 @@ def ytdl():
             ao = True
         else:
             ao = False
+
         try:
             options = get_options(link, ao)
-            print(options)
         except RegexMatchError as e:
             logging.info(f'Error: {error}')
             return redirect(url_for("error", error=e))
@@ -49,15 +49,19 @@ def error():
 def download():
     if request.method == "POST":
 
-        params = json.loads(request.form['params'])
-        link = params['link-field']
-        timestamps = params['timestamp-field']
-        itag = request.args.get('itag', None)
+        try:
+            params = json.loads(request.form['params'])
+            link = params['link-field']
+            timestamps = params['timestamp-field']
+            itag = request.args.get('itag', None)
+        except Exception as e:
+            logging.info(f'Error: {error}')
+            return redirect(url_for("error", error=e))
 
-        print(itag, link, timestamps)
         f = download_controller(link, timestamps, itag)
-        print(f'f = {f}')
         filename = os.path.basename(f)
+        logging.info(f'Params: link: {link}, timestamps: {timestamps}, itag: {itag}')
+        logging.info(f'File: {f}')
 
         @after_this_request
         def delete_file(response):

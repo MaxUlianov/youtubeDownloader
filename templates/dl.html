@@ -23,18 +23,18 @@
         <h1>YT Downloader</h1>
 
         <div class="dl-container">
+            <div>
+                <h3>Your download: </h3>
+                {{ link }}
+            </div>
             <div id="loading" class="loading">
                 <img src="/img/loading.gif">
             </div>
-            <div>
-                <h3>Your download</h3>
-                {{ link }}
-            </div>
-            <div>
+            <div id="dl">
                 <form method="post">
                     <input type="submit" class="option dl-button" value="Download" onclick="afterLoading();">
                     <input type="hidden" name="params" value="{{ params }}">
-                    <input type="hidden" name="itag" value="{{ itag }}"
+                    <input type="hidden" name="itag" value="{{ itag }}">
                 </form>
             </div>
         </div>

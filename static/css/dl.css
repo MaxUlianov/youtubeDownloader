@@ -6,12 +6,12 @@
 }
 
 .dl-button{
-    background: red;
+    background: #20222a;
     color: white;
 }
 
 .dl-button:hover{
-    background: #20222a;
+    background: orange;
 }
 
 .redirect-back{

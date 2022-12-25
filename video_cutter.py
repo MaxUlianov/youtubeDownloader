@@ -1,4 +1,6 @@
 import os
+import logging
+from audio_cutter import get_timestamps
 
 
 def cut_video(filename, cut_points, base_path='static/files/'):
@@ -45,4 +47,14 @@ def cut_video_segments(file, timestamps, base_path='static/files/'):
 
 
 if __name__ == '__main__':
-    print(cut_video('rotated-shark.mov', ('00:01', '00:05')))
+    logging.basicConfig(format='%(asctime)s | %(levelname)s: %(message)s', level=logging.INFO)
+
+    file = input('Insert filename:\n')
+    path = 'static/files'
+
+    time = input('Insert timestamps\n')
+    times = get_timestamps(time)
+
+    files = cut_video_segments(file, times, path)
+    print(f'files: {files}')
+    os.remove(file)

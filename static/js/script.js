@@ -5,6 +5,7 @@ function loading(){
 }
 
 function afterLoading(){
-//    document.getElementById("loading").style.display = "none";
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("dl").style.display = "none";
     document.getElementById("redirect-back").style.display = "block";
 }
