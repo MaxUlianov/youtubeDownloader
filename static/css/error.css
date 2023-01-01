@@ -1,0 +1,23 @@
+html, body {
+    height: 100%;
+}
+
+
+.main-container {
+    height: 100%;
+}
+
+.dl-container {
+    padding-bottom: 0;
+}
+
+.redirect-back {
+    padding-top: 50px;
+    display: block;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    position: fixed;
+}

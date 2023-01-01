@@ -5,6 +5,7 @@
     <title>Download</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dl.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/error.css') }}"/>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/icon-small.ico') }}">
 </head>
 <body>
@@ -20,26 +21,15 @@
     </header>
 
     <div class="main-container">
-        <h1>YT Downloader</h1>
+        <h1>Download Error</h1>
 
         <div class="dl-container">
             <div>
-                <h3>Your download: </h3>
-                {{ link }}
-            </div>
-            <div id="loading" class="loading">
-                <img src="/img/loading.gif">
-            </div>
-            <div id="dl">
-                <form method="post">
-                    <input type="submit" class="option dl-button" value="Download" onclick="afterLoading();">
-                    <input type="hidden" name="params" value="{{ params }}">
-                    <input type="hidden" name="itag" value="{{ itag }}">
-                </form>
+                {{ error_message }}
             </div>
         </div>
         <div class="redirect-back" id="redirect-back">
-            <a class="option" href="/">Download another video</a>
+            <a class="option" href="/">Try again</a>
         </div>
     </div>
 

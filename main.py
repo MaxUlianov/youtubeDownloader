@@ -42,7 +42,8 @@ def ytdl():
 @app.route('/error', methods=["GET"])
 def error():
     e = request.args.get("error", None)
-    return f'Error {e} in video download'
+    error_message = f'Error {e} in video download, please, try again'
+    return render_template("error_page.html", error_message=error_message)
 
 
 @app.route('/download', methods=["GET", "POST"])
