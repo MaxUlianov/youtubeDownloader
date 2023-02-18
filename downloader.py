@@ -102,7 +102,7 @@ def rename_file(file: str, ext=''):
 def make_archive(file_list):
     name = '/' + os.path.basename(file_list[0][:-16]) + '.zip'
     archive_name = os.path.abspath('static/files' + name)
-    print(archive_name)
+    # print(archive_name)
     with ZipFile(archive_name, 'w') as archive:
         for file in file_list:
             archive.write(file, os.path.basename(file))
@@ -117,13 +117,19 @@ def download_controller(link, timestamps, itag=None, a_only=False, path=None):
 
         if timestamps:
             ts = get_timestamps(timestamps)
-            dl_files = cut_audio_segments(dl_file, ts)
-            archive = make_archive(dl_files)
 
-            os.remove(dl_file)
-            for file in dl_files:
-                os.remove(file)
-            return archive
+            try:
+                dl_files = cut_audio_segments(dl_file, ts)
+                archive = make_archive(dl_files)
+
+                os.remove(dl_file)
+                for file in dl_files:
+                    os.remove(file)
+                return archive
+            except Exception as e:
+                logging.debug(f'Error in audio cutter: {repr(e)}; returning full audio')
+                return dl_file
+
     elif not a_only:
         dl_file = download_video(link, itag)
 

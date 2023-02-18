@@ -34,6 +34,8 @@ def cut_audio(filename, cut_points, base_path='static/files/'):
     save_path = os.path.join(base_path, filename)
     logging.info(f'save path: {save_path}')
 
+    AudioSegment.ffprobe = '/usr/local/bin/ffprobe'
+
     track = AudioSegment.from_file(f'{save_path}')
 
     start_time, end_time = convert_timestamp(cut_points)
@@ -66,14 +68,15 @@ def cut_audio_segments(file, timestamps, base_path='static/files/'):
     :type base_path: str
     :return list: list of names for audio segment files
     """
-    ex_list = {}
+    # ex_list = {}
     files = []
     for timestamp in timestamps:
         try:
             file_cut = cut_audio(file, timestamp, base_path)
             files.append(file_cut)
         except Exception as e:
-            ex_list[timestamp] = (repr(e))
+            # ex_list[timestamp] = (repr(e))
+            logging.info(f'Error when cutting audio: {repr(e)}')
 
     return files
 
@@ -99,6 +102,8 @@ if __name__ == '__main__':
     time = input('Insert timestamps\n')
     times = get_timestamps(time)
 
+    print(f'File: {file}, timestamps: {times}')
+
     files = cut_audio_segments(file, times, path)
     print(f'files: {files}')
-    os.remove(file)
+    os.remove(os.path.join(path, file))

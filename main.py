@@ -12,6 +12,13 @@ app = Flask(__name__, static_folder="static", static_url_path="")
 app.secret_key = config.secret
 
 
+def check_audio_only(form):
+    if 'audio-only' in form and form['audio-only'] == 'on':
+        return True
+    else:
+        return False
+
+
 @app.route('/', methods=['GET', 'POST'])
 def ytdl():
     if request.method == "POST":
@@ -22,10 +29,7 @@ def ytdl():
 
         params = json.dumps(request.form.to_dict())
 
-        if 'audio-only' in request.form and request.form['audio-only'] == 'on':
-            ao = True
-        else:
-            ao = False
+        ao = check_audio_only(request.form)
 
         try:
             options = get_options(link, ao)
@@ -54,15 +58,18 @@ def download():
             params = json.loads(request.form['params'])
             link = params['link-field']
             timestamps = params['timestamp-field']
+            ao = check_audio_only(params)
             itag = request.args.get('itag', None)
+
+            logging.info(f'Params: link: {link}, timestamps: {timestamps}, itag: {itag}, audio-only: {ao}')
+
+            f = download_controller(link, timestamps, itag=itag, a_only=ao)
+            filename = os.path.basename(f)
+            logging.info(f'File: {f}')
+
         except Exception as e:
             logging.info(f'Error: {error}')
             return redirect(url_for("error", error=e))
-
-        f = download_controller(link, timestamps, itag)
-        filename = os.path.basename(f)
-        logging.info(f'Params: link: {link}, timestamps: {timestamps}, itag: {itag}')
-        logging.info(f'File: {f}')
 
         @after_this_request
         def delete_file(response):
@@ -73,6 +80,7 @@ def download():
             return response
 
         return send_from_directory(directory='static/files', path=filename, as_attachment=True)
+
     elif request.method == "GET":
         if request.args:
             itag = request.args.get("itag", None)
