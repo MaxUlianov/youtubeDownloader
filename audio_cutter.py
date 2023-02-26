@@ -43,7 +43,7 @@ def cut_audio(filename, cut_points, base_path='static/files/'):
 
     audio = track[start_time:end_time]
 
-    file_format = 'mp3'
+    file_format = 'm4a'
 
     # if len(filename) > 20:
     #     filename = filename[:20]
@@ -53,7 +53,7 @@ def cut_audio(filename, cut_points, base_path='static/files/'):
     save_path = os.path.join(base_path, name)
     logging.info(f'save path: {save_path}')
 
-    audio.export(f'{save_path}', format=file_format)
+    audio.export(f'{save_path}', format='mp4')
     return name
 
 
