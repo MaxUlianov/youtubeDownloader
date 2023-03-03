@@ -3,7 +3,7 @@
 #### Python Flask web app for downloading video/audio-only files
 #### 
 
-App functions:
+#### App functions:
 - download Youtube videos
 - cut and download chosen segments of Youtube videos
 - cut and download audio of Youtube videos
@@ -17,6 +17,20 @@ download preferences.
 
 App is built with Python and Flask framework, pytube library for connecting to Youtube; 
 ffmpeg and pydub for video/audio file handling
+
+
+#### Installation
+
+Install dependencies
+> -m pip install -r requirements.txt
+
+#### Starting the app
+
+> python main.py
+
+
+**Note:** video and audio cut functions require **ffmpeg** and **ffprobe** installed and available in system PATH
+
 
 ---
 
